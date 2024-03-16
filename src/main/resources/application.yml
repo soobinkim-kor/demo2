@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: demo
+  web:
+    resources:
+      static-locations: classpath:/static/
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/demo
+    username: root
+    password: 1234
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
