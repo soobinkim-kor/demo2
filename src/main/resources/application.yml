@@ -1,9 +1,13 @@
 spring:
+  thymeleaf:
+    prefix: classpath:/static/bootstrap/
+    suffix: .jsp
+    cache: false
   application:
     name: demo
   web:
     resources:
-      static-locations: classpath:/static/
+      static-locations: classpath:/static/, classpath:/static/bootstrap/
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/demo
