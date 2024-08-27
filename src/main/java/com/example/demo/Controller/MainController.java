@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 public class MainController {
-    @GetMapping(value = "/")
-    public ResponseEntity<String> getUser(){
-        return new ResponseEntity<>("hello", HttpStatus.OK);
+    @GetMapping("/api/hello")
+    public String test() {
+        return "Hello, world!";
     }
 }
