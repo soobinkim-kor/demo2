@@ -2,7 +2,7 @@ package com.example.demo.Service;
 
 
 import com.example.demo.DTO.UserDTO;
-import com.example.demo.Entity.User;
+import com.example.demo.Entity.UserBase;
 import com.example.demo.Repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,12 +13,12 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public void saveUser(User user) {
+    public void saveUser(UserBase user) {
         userRepository.save(user);
     }
 
     @Override
-    public User getUserByUsrId(UserDTO userDTO) {
+    public UserBase getUserByUsrId(UserDTO userDTO) {
         return userRepository.findByUsrId(userDTO.getUsrId());
     }
 }

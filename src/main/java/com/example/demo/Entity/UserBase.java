@@ -5,11 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -19,7 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @EntityListeners( value = AuditingEntityListener.class)
 @Table(name = "USER_BASE")
-public class User {
+public class UserBase extends BaseEntity{
     @Id
     @Column(name = "USR_ID", nullable = false)
     private String usrId;
@@ -38,12 +35,4 @@ public class User {
 
     @Column(name = "USR_PWD_UPD_DTM")
     private Date usrPwdUpdDtm;
-
-    @Column(name = "SYS_REG_DTM")
-    @CreatedDate
-    private LocalDateTime sysRegDtm;
-
-    @Column(name = "SYS_DEL_DTM")
-    @DateTimeFormat
-    private LocalDateTime sysDelDtm;
 }
