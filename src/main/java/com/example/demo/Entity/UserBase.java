@@ -18,6 +18,7 @@ import java.util.Date;
 @Table(name = "USER_BASE")
 public class UserBase extends BaseEntity{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USR_ID", nullable = false)
     private String usrId;
 

@@ -40,7 +40,8 @@ public class UserController {
     public ResponseEntity<UserBase> saveUserTest(){
         UserBase user = UserBase.builder()
                 .usrNm("Soobin")
-                .usrId("shb03207")
+                .usrEmail("shb03207@gmail.com")
+                .usrPwd("1234")
                 .build();
         userService.saveUser(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
