@@ -35,3 +35,10 @@ out/
 
 ### VS Code ###
 .vscode/
+
+
+### DOCKER ###
+./mysql-data/
+./grafana-data/
+./loki-data/
+/.mysql-data/
