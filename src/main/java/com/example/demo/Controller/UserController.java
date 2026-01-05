@@ -19,11 +19,11 @@ public class UserController {
         return new ResponseEntity<>("hello", HttpStatus.OK);
     }
 
-    @GetMapping(value = "/getUser")
-    public ResponseEntity<UserBase> getUser(@RequestParam String usrId){
-        UserDTO userDTO = UserDTO.builder().usrId(usrId).build();
+    @GetMapping(value = "/api/users/getUser/{usrNo}")
+    public ResponseEntity<UserBase> getUser(@PathVariable Long usrNo){
+        UserDTO userDTO = UserDTO.builder().usrNo(usrNo).build();
 
-        return new ResponseEntity<>(userService.getUserByUsrId(userDTO), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getUserByUsrNo(userDTO), HttpStatus.OK);
     }
 
     @PostMapping(value = "/createUser")
@@ -39,6 +39,7 @@ public class UserController {
     @GetMapping(value = "/createUser")
     public ResponseEntity<UserBase> saveUserTest(){
         UserBase user = UserBase.builder()
+                .usrId("shb03207")
                 .usrNm("Soobin")
                 .usrEmail("shb03207@gmail.com")
                 .usrPwd("1234")

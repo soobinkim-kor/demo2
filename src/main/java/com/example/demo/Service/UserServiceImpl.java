@@ -21,4 +21,9 @@ public class UserServiceImpl implements UserService {
     public UserBase getUserByUsrId(UserDTO userDTO) {
         return userRepository.findByUsrId(userDTO.getUsrId());
     }
+
+    @Override
+    public UserBase getUserByUsrNo(UserDTO userDTO) {
+        return userRepository.findByUsrNo(userDTO.getUsrNo());
+    }
 }
