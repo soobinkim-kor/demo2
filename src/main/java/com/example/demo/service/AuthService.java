@@ -1,20 +1,21 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.LoginRequest;
+import com.example.demo.dto.SignInRequest;
 import com.example.demo.dto.UserSession;
 import com.example.demo.entity.UserBase;
 import com.example.demo.repository.UserBaseRepository;
 
+import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class AuthService {
 
     private final UserBaseRepository userBaseRepository;
-
-    public AuthService(UserBaseRepository userBaseRepository) {
-        this.userBaseRepository = userBaseRepository;
-    }
+    private final PasswordEncoder passwordEncoder;
 
     public UserSession login(LoginRequest request) {
 
@@ -26,6 +27,28 @@ public class AuthService {
             throw new IllegalArgumentException("비밀번호 불일치");
         }
 
+        return new UserSession(
+                user.getUsrId(),
+                user.getUsrNm(),
+                user.getRole()
+        );
+    }
+
+    public UserSession signIn(SignInRequest request) {
+
+        // 1️⃣ 사용자 조회
+        UserBase user = userBaseRepository.findByUsrId(request.getUsrId())
+                .orElseThrow(() -> new IllegalArgumentException("아이디 또는 비밀번호 오류"));
+
+        // 2️⃣ BCrypt 검증 (핵심)
+        if (!passwordEncoder.matches(
+                request.getUsrPwd(),
+                user.getUsrPwd()
+        )) {
+            throw new IllegalArgumentException("아이디 또는 비밀번호 오류");
+        }
+
+        // 3️⃣ 세션용 DTO 생성
         return new UserSession(
                 user.getUsrId(),
                 user.getUsrNm(),

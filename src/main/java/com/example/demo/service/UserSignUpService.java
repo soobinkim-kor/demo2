@@ -21,7 +21,7 @@ public class UserSignUpService {
     }
 
     @Transactional
-    public void signUp(SignUpRequest request) {
+    public UserBase signUp(SignUpRequest request) {
 
         // 1️⃣ 아이디 중복 체크
         if (userBaseRepository.existsByUsrId(request.getUsrId())) {
@@ -37,9 +37,11 @@ public class UserSignUpService {
                     .usrId(request.getUsrId())
                     .usrNm(request.getUsrNm())
                     .usrPwd(encodedPwd)
+                    .usrEmail(request.getUsrEmail())
+                    .role("ADMIN")
                     .build();
 
         // 4️⃣ 저장
-        userBaseRepository.save(user);
+        return userBaseRepository.save(user);
     }
 }

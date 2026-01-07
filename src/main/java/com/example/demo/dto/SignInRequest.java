@@ -5,13 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
-public class SignUpRequest {
-
+public class SignInRequest {
     private String usrId;
-    private String usrNm;
-    private String password;
-    private String usrEmail;
+    private String usrPwd;
 }
