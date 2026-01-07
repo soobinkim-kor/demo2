@@ -1,16 +1,17 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
-import com.example.demo.DTO.UserDTO;
-import com.example.demo.Entity.UserBase;
-import com.example.demo.Repository.UserRepository;
+import com.example.demo.dto.UserDTO;
+import com.example.demo.entity.UserBase;
+import com.example.demo.repository.UserBaseRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.*;
@@ -18,7 +19,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
     @Mock
-    private UserRepository userRepository;
+    private UserBaseRepository userBaseRepository;
 
     @InjectMocks
     private UserServiceImpl userService;
@@ -30,10 +31,10 @@ class UserServiceImplTest {
 
         UserBase mockUser = UserBase.builder().usrId("shb03207").usrNm("수빈").build();
 
-        when(userRepository.findByUsrId("shb03207")).thenReturn(mockUser);
+        when(userBaseRepository.findByUsrId("shb03207")).thenReturn(Optional.ofNullable(mockUser));
 
         // when
-        UserBase result = userService.getUserByUsrId(userDTO);
+        UserBase result = userService.getUserByUsrId(userDTO).orElse(null);
 
         // then
         assertThat(result).isNotNull();
@@ -41,6 +42,6 @@ class UserServiceImplTest {
         assertThat(result.getUsrNm()).isEqualTo("수빈");
 
         // repository 호출 검증
-        verify(userRepository, times(1)).findByUsrId("shb03207");
+        verify(userBaseRepository, times(1)).findByUsrId("shb03207");
     }
 }

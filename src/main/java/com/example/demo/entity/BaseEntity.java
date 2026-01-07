@@ -1,4 +1,4 @@
-package com.example.demo.Entity;
+package com.example.demo.entity;
 
 import jakarta.persistence.Column;
 import org.springframework.data.annotation.CreatedDate;

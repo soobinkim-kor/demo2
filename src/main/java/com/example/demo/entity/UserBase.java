@@ -1,4 +1,4 @@
-package com.example.demo.Entity;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,6 +30,9 @@ public class UserBase extends BaseEntity{
 
     @Column(name = "USR_PWD")
     private String usrPwd;
+
+    @Column(name = "USR_ROLE")
+    private String role;
 
     @Column(name = "USR_EMAIL")
     private String usrEmail;
