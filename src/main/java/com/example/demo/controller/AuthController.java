@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.LoginRequest;
+import com.example.demo.request.LoginRequest;
 import com.example.demo.dto.UserSession;
 import com.example.demo.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;

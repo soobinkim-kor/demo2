@@ -16,7 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @EntityListeners( value = AuditingEntityListener.class)
 @Table(name = "USER_BASE")
-public class UserBase extends BaseEntity{
+public class UserEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USR_NO", nullable = false)

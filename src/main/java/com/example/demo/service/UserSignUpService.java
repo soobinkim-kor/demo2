@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.SignUpRequest;
-import com.example.demo.entity.UserBase;
+import com.example.demo.request.SignUpRequest;
+import com.example.demo.entity.UserEntity;
 import com.example.demo.repository.UserBaseRepository;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,7 +21,7 @@ public class UserSignUpService {
     }
 
     @Transactional
-    public UserBase signUp(SignUpRequest request) {
+    public UserEntity signUp(SignUpRequest request) {
 
         // 1️⃣ 아이디 중복 체크
         if (userBaseRepository.existsByUsrId(request.getUsrId())) {
@@ -32,8 +32,8 @@ public class UserSignUpService {
         String encodedPwd = passwordEncoder.encode(request.getPassword());
 
         // 3️⃣ 엔티티 생성
-        UserBase user =
-            UserBase.builder()
+        UserEntity user =
+            UserEntity.builder()
                     .usrId(request.getUsrId())
                     .usrNm(request.getUsrNm())
                     .usrPwd(encodedPwd)

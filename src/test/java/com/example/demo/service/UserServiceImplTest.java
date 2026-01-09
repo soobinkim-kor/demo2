@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.UserDTO;
-import com.example.demo.entity.UserBase;
+import com.example.demo.entity.UserEntity;
 import com.example.demo.repository.UserBaseRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,12 +29,12 @@ class UserServiceImplTest {
         // given
         UserDTO userDTO = UserDTO.builder().usrId("shb03207").build();
 
-        UserBase mockUser = UserBase.builder().usrId("shb03207").usrNm("수빈").build();
+        UserEntity mockUser = UserEntity.builder().usrId("shb03207").usrNm("수빈").build();
 
         when(userBaseRepository.findByUsrId("shb03207")).thenReturn(Optional.ofNullable(mockUser));
 
         // when
-        UserBase result = userService.getUserByUsrId(userDTO).orElse(null);
+        UserEntity result = userService.getUserByUsrId(userDTO).orElse(null);
 
         // then
         assertThat(result).isNotNull();

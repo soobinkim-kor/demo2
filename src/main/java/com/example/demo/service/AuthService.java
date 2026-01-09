@@ -1,9 +1,9 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.LoginRequest;
-import com.example.demo.dto.SignInRequest;
+import com.example.demo.request.LoginRequest;
+import com.example.demo.request.SignInRequest;
 import com.example.demo.dto.UserSession;
-import com.example.demo.entity.UserBase;
+import com.example.demo.entity.UserEntity;
 import com.example.demo.repository.UserBaseRepository;
 
 import lombok.AllArgsConstructor;
@@ -19,7 +19,7 @@ public class AuthService {
 
     public UserSession login(LoginRequest request) {
 
-        UserBase user = userBaseRepository.findByUsrId(request.getUserId())
+        UserEntity user = userBaseRepository.findByUsrId(request.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자"));
 
         // ⚠️ 실제 서비스에서는 BCrypt 사용
@@ -37,7 +37,7 @@ public class AuthService {
     public UserSession signIn(SignInRequest request) {
 
         // 1️⃣ 사용자 조회
-        UserBase user = userBaseRepository.findByUsrId(request.getUsrId())
+        UserEntity user = userBaseRepository.findByUsrId(request.getUsrId())
                 .orElseThrow(() -> new IllegalArgumentException("아이디 또는 비밀번호 오류"));
 
         // 2️⃣ BCrypt 검증 (핵심)

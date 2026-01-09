@@ -1,10 +1,10 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.SignUpRequest;
-import com.example.demo.dto.SignInRequest;
+import com.example.demo.request.SignUpRequest;
+import com.example.demo.request.SignInRequest;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserSession;
-import com.example.demo.entity.UserBase;
+import com.example.demo.entity.UserEntity;
 import com.example.demo.service.AuthService;
 import com.example.demo.service.UserService;
 import com.example.demo.service.UserSignUpService;
@@ -25,21 +25,21 @@ public class UserController {
     private final AuthService authService;
 
     @GetMapping(value = "/test")
-    public ResponseEntity<String> controllerTest(@RequestBody UserBase userParam){
-        UserBase user = UserBase.builder().usrNm("Soobin").build();
+    public ResponseEntity<String> controllerTest(@RequestBody UserEntity userParam){
+        UserEntity user = UserEntity.builder().usrNm("Soobin").build();
         userService.saveUser(user);
         return new ResponseEntity<>("hello", HttpStatus.OK);
     }
 
     @GetMapping(value = "/api/users/getUser/{usrNo}")
-    public ResponseEntity<Optional<UserBase>> getUser(@PathVariable Long usrNo){
+    public ResponseEntity<Optional<UserEntity>> getUser(@PathVariable Long usrNo){
         UserDTO userDTO = UserDTO.builder().usrNo(usrNo).build();
 
         return new ResponseEntity<>(userService.getUserByUsrNo(userDTO), HttpStatus.OK);
     }
 
     @PostMapping(value = "/createUser")
-    public ResponseEntity<UserBase> saveUser(@RequestBody UserDTO userParam){
+    public ResponseEntity<UserEntity> saveUser(@RequestBody UserDTO userParam){
         SignUpRequest signUpRequest = new SignUpRequest();
         signUpRequest.setUsrId(UUID.randomUUID().toString());
         signUpRequest.setUsrNm("김수빈");
@@ -49,7 +49,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/createUser")
-    public ResponseEntity<UserBase> saveUserTest(){
+    public ResponseEntity<UserEntity> saveUserTest(){
         SignUpRequest signUpRequest = new SignUpRequest();
         signUpRequest.setUsrId(UUID.randomUUID().toString());
         signUpRequest.setUsrNm("김수빈");
