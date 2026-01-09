@@ -1,20 +1,19 @@
 package com.example.demo.global.config;
 
 import com.example.demo.global.interceptor.AuthInterceptor;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+@AllArgsConstructor
 public class WebMvcConfig implements WebMvcConfigurer {
     private final AuthInterceptor authInterceptor;
 
-    public WebMvcConfig(AuthInterceptor authInterceptor) {
-        this.authInterceptor = authInterceptor;
-    }
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        /* auth interceptor */
         registry.addInterceptor(authInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns(
@@ -23,5 +22,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "/css/**",
                         "/js/**"
                 );
+
+        /* next interceptor */
+        // registry.addInterceptor(my another custom interceptor)
     }
 }
