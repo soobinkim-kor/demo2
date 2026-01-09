@@ -9,11 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
-public class CommunityController {
+public class ArticleController {
     private final ArticleService articleService;
 
     @GetMapping("/api/articles/writeArticle/")
@@ -21,8 +21,8 @@ public class CommunityController {
         return null;
     }
 
-    @GetMapping("/api/articles/getArticle/")
-    public ResponseEntity<ArticleWriteResponse> getArticle(ArticleWriteRequest articleWriteRequest){
-        return new ResponseEntity<>(articleService.getArticle(1L), HttpStatus.OK);
+    @GetMapping("/api/articles/getAllArticle/")
+    public ResponseEntity<List<ArticleWriteResponse>> getAllArticle(ArticleWriteRequest articleWriteRequest){
+        return new ResponseEntity<>(articleService.getAllArticle(), HttpStatus.OK);
     }
 }

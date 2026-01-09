@@ -1,11 +1,13 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.article.ArticleDto;
 import com.example.demo.entity.ArticleEntity;
 import com.example.demo.repository.ArticleBaseRepository;
 import com.example.demo.response.article.ArticleWriteResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -13,14 +15,16 @@ public class ArticleService {
 
     private final ArticleBaseRepository articleBaseRepository;
 
-    public ArticleWriteResponse getArticle(Long articleId) {
-        ArticleEntity article = articleBaseRepository.findByArticleId(articleId).orElseThrow(() -> new RuntimeException(""));
+    public List<ArticleWriteResponse> getAllArticle() {
+        List<ArticleEntity> allArticle = articleBaseRepository.findAll();
 
-        if (article == null) {
+        if (CollectionUtils.isEmpty(allArticle)) {
 //            throw new BusinessException(ArticleErrorCode.ARTICLE_NOT_FOUND);
         }
 
-        return ArticleWriteResponse.from(article);
+        return allArticle.stream()
+                .map(ArticleWriteResponse::from)
+                .toList();
     }
 }
 
