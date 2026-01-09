@@ -1,15 +1,15 @@
 package com.example.demo.controller;
 
-import com.example.demo.request.LoginRequest;
-import com.example.demo.dto.UserSession;
+import com.example.demo.request.user.LoginRequest;
+import com.example.demo.dto.user.UserSession;
 import com.example.demo.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class AuthController {
 
     private final AuthService authService;

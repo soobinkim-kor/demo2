@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.request.SignUpRequest;
+import com.example.demo.request.user.SignUpRequest;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.repository.UserBaseRepository;
 

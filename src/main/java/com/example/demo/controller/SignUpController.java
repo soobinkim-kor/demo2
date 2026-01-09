@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.request.SignUpRequest;
+import com.example.demo.request.user.SignUpRequest;
 import com.example.demo.service.UserSignUpService;
 
 import org.springframework.stereotype.Controller;

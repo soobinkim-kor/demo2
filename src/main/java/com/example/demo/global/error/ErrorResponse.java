@@ -19,7 +19,7 @@ public class ErrorResponse {
         this.path = path;
     }
 
-    public static ErrorResponse of(ErrorCode errorCode, String message, String path) {
-        return new ErrorResponse(errorCode.code(), message, path);
+    public static ErrorResponse of(CommonErrorCode commonErrorCode, String message, String path) {
+        return new ErrorResponse(commonErrorCode.code(), message, path);
     }
 }

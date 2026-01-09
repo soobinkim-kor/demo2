@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.request.SignInRequest;
-import com.example.demo.dto.UserSession;
+import com.example.demo.request.user.SignInRequest;
+import com.example.demo.dto.user.UserSession;
 import com.example.demo.service.AuthService;
 
 import jakarta.servlet.http.HttpServletRequest;

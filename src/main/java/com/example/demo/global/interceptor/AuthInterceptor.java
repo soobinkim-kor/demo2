@@ -1,6 +1,6 @@
 package com.example.demo.global.interceptor;
 
-import com.example.demo.dto.UserSession;
+import com.example.demo.dto.user.UserSession;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;

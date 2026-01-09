@@ -1,8 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.request.LoginRequest;
-import com.example.demo.request.SignInRequest;
-import com.example.demo.dto.UserSession;
+import com.example.demo.request.user.LoginRequest;
+import com.example.demo.request.user.SignInRequest;
+import com.example.demo.dto.user.UserSession;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.repository.UserBaseRepository;
 

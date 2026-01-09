@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.request.SignUpRequest;
-import com.example.demo.request.SignInRequest;
-import com.example.demo.dto.UserDTO;
-import com.example.demo.dto.UserSession;
+import com.example.demo.request.user.SignUpRequest;
+import com.example.demo.request.user.SignInRequest;
+import com.example.demo.dto.user.UserDTO;
+import com.example.demo.dto.user.UserSession;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.service.AuthService;
 import com.example.demo.service.UserService;

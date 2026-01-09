@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
             Locale locale
     ){
         String message = messageSource.getMessage(
-                e.getErrorCode().messageKey(),
+                e.getCommonErrorCode().messageKey(),
                 null,
                 locale
         );
@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .badRequest()
                 .body(ErrorResponse.of(
-                        e.getErrorCode(),
+                        e.getCommonErrorCode(),
                         message,
                         request.getRequestURI()
                 ));
