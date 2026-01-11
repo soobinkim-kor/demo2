@@ -3,7 +3,8 @@ package com.example.demo.global.error;
 import org.springframework.http.HttpStatus;
 
 public enum CommonErrorCode implements ErrorCodeInterface {
-    NOT_FOUND("COMMON_001", "common.not.found", HttpStatus.NOT_FOUND);
+    NOT_FOUND("COMMON_001", "common.not.found", HttpStatus.NOT_FOUND),
+    RESOURCE_NOT_FOUND("","",HttpStatus.NOT_FOUND);
 
     private final String code;
     private final String messageKey;

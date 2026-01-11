@@ -42,3 +42,4 @@ out/
 ./grafana-data/
 ./loki-data/
 /.mysql-data/
+

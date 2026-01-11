@@ -29,6 +29,8 @@ public class AuthController {
 
         // 3. 세션에 로그인 정보 저장
         session.setAttribute("LOGIN_USER", userSession);
+        // 3. 세션에 로그인 정보 저장
+        session.setAttribute("USER_NO", userSession.userId());
 
         // 4. 세션 유지 시간 (선택)
         session.setMaxInactiveInterval(30 * 60); // 30분

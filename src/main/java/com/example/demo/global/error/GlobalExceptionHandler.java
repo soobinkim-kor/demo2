@@ -2,6 +2,8 @@ package com.example.demo.global.error;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j;
 import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,8 +22,9 @@ public class GlobalExceptionHandler {
             HttpServletRequest request,
             Locale locale
     ){
+        ErrorCodeInterface errorCode = e.getErrorCode();
         String message = messageSource.getMessage(
-                e.getCommonErrorCode().messageKey(),
+                errorCode.messageKey(),
                 null,
                 locale
         );
@@ -29,7 +32,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .badRequest()
                 .body(ErrorResponse.of(
-                        e.getCommonErrorCode(),
+                        errorCode,
                         message,
                         request.getRequestURI()
                 ));

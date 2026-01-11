@@ -28,6 +28,7 @@ public class AuthService {
         }
 
         return new UserSession(
+                user.getUsrNo(),
                 user.getUsrId(),
                 user.getUsrNm(),
                 user.getRole()
@@ -50,6 +51,7 @@ public class AuthService {
 
         // 3️⃣ 세션용 DTO 생성
         return new UserSession(
+                user.getUsrNo(),
                 user.getUsrId(),
                 user.getUsrNm(),
                 user.getRole()
