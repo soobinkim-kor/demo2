@@ -17,6 +17,9 @@ spring:
     user:
       name: user
       password: 1234
+  messages:
+    encoding: UTF-8
+    basename: messages_ko_KR
 logging:
   level:
     org.hibernate.SQL: debug

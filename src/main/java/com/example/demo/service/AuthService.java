@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.global.error.AuthErrorCode;
+import com.example.demo.global.error.BusinessException;
 import com.example.demo.request.user.LoginRequest;
 import com.example.demo.request.user.SignInRequest;
 import com.example.demo.dto.user.UserSession;
@@ -20,11 +22,11 @@ public class AuthService {
     public UserSession login(LoginRequest request) {
 
         UserEntity user = userBaseRepository.findByUsrId(request.getUsrId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자"));
+                .orElseThrow(() -> new BusinessException(AuthErrorCode.USER_NOT_FOUND));
 
         // ⚠️ 실제 서비스에서는 BCrypt 사용
         if (!passwordEncoder.matches(request.getPassword(), user.getUsrPwd())) {
-            throw new IllegalArgumentException("비밀번호 불일치");
+            throw new BusinessException(AuthErrorCode.USER_NOT_FOUND);
         }
 
         return new UserSession(
