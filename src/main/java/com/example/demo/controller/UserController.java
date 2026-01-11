@@ -59,11 +59,8 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String signIn(SignInRequest request,
+    public ResponseEntity<UserSession> signIn(@RequestBody SignInRequest request,
                          HttpServletRequest httpRequest) {
-        request = new SignInRequest();
-        request.setUsrId("ec9f0afb-27ab-459c-a526-a872a92ccfe3");
-        request.setUsrPwd("1234");
         // 1️⃣ 인증
         UserSession userSession = authService.signIn(request);
 
@@ -73,6 +70,6 @@ public class UserController {
         session.setMaxInactiveInterval(30 * 60); // 30분
 
         // 3️⃣ 이동
-        return "redirect:/main";
+        return new ResponseEntity<>(userSession, HttpStatus.OK);
     }
 }

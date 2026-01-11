@@ -19,11 +19,11 @@ public class AuthService {
 
     public UserSession login(LoginRequest request) {
 
-        UserEntity user = userBaseRepository.findByUsrId(request.getUserId())
+        UserEntity user = userBaseRepository.findByUsrId(request.getUsrId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자"));
 
         // ⚠️ 실제 서비스에서는 BCrypt 사용
-        if (!user.getUsrPwd().equals(request.getPassword())) {
+        if (!passwordEncoder.matches(request.getPassword(), user.getUsrPwd())) {
             throw new IllegalArgumentException("비밀번호 불일치");
         }
 

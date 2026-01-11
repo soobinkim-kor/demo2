@@ -6,7 +6,10 @@ import com.example.demo.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -19,7 +22,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(LoginRequest request, HttpServletRequest httpRequest) {
+    public ResponseEntity<UserSession> login(@RequestBody LoginRequest request, HttpServletRequest httpRequest) {
 
         // 1. 사용자 인증
         UserSession userSession = authService.login(request);
@@ -35,6 +38,6 @@ public class AuthController {
         // 4. 세션 유지 시간 (선택)
         session.setMaxInactiveInterval(30 * 60); // 30분
 
-        return "redirect:/main";
+        return new ResponseEntity<>(userSession, HttpStatus.ACCEPTED);
     }
 }
