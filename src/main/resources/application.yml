@@ -9,6 +9,9 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/db01
     username: root
     password: 1234
+  redis:
+    host: redis
+    port: 6379
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     open-in-view: false
