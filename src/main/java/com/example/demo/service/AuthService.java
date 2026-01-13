@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.global.error.AuthErrorCode;
 import com.example.demo.global.error.BusinessException;
+import com.example.demo.security.jwt.JwtProvider;
 import com.example.demo.request.user.LoginRequest;
 import com.example.demo.request.user.SignInRequest;
 import com.example.demo.dto.user.UserSession;
@@ -11,6 +12,7 @@ import com.example.demo.repository.UserBaseRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Service
 @AllArgsConstructor
@@ -18,8 +20,9 @@ public class AuthService {
 
     private final UserBaseRepository userBaseRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtProvider jwtProvider;
 
-    public UserSession login(LoginRequest request) {
+    public String login(LoginRequest request) {
 
         UserEntity user = userBaseRepository.findByUsrId(request.getUsrId())
                 .orElseThrow(() -> new BusinessException(AuthErrorCode.USER_NOT_FOUND));
@@ -29,10 +32,8 @@ public class AuthService {
             throw new BusinessException(AuthErrorCode.USER_NOT_FOUND);
         }
 
-        return new UserSession(
-                user.getUsrNo(),
-                user.getUsrId(),
-                user.getUsrNm(),
+        return jwtProvider.createAccessToken(
+                String.valueOf(user.getUsrNo()),
                 user.getRole()
         );
     }

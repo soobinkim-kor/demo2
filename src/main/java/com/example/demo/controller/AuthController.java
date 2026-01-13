@@ -1,18 +1,23 @@
 package com.example.demo.controller;
 
+import com.example.demo.security.jwt.JwtCookieUtil;
 import com.example.demo.request.user.LoginRequest;
-import com.example.demo.dto.user.UserSession;
+import com.example.demo.response.user.TokenResponse;
 import com.example.demo.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 
-import org.springframework.http.HttpStatus;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("api/auth")
+@Slf4j
 public class AuthController {
 
     private final AuthService authService;
@@ -22,22 +27,21 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserSession> login(@RequestBody LoginRequest request, HttpServletRequest httpRequest) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest request, HttpServletRequest httpRequest) {
 
         // 1. 사용자 인증
-        UserSession userSession = authService.login(request);
+        String accessToken = authService.login(request);
+// 1️⃣ Authorization 헤더가 있으면 → API / 모바일
+        String authHeader = httpRequest.getHeader("Authorization");
+        if (authHeader != null) {
+            return ResponseEntity.ok(new TokenResponse(accessToken));
+        }
 
-        // 2. 세션 생성 (없으면 생성)
-        HttpSession session = httpRequest.getSession(true);
-
-        // 3. 세션에 로그인 정보 저장
-        session.setAttribute("LOGIN_USER", userSession);
-        // 3. 세션에 로그인 정보 저장
-        session.setAttribute("USER_NO", userSession.userId());
-
-        // 4. 세션 유지 시간 (선택)
-        session.setMaxInactiveInterval(30 * 60); // 30분
-
-        return new ResponseEntity<>(userSession, HttpStatus.ACCEPTED);
+        // 2️⃣ 없으면 → 웹 (쿠키)
+        ResponseCookie cookie = JwtCookieUtil.createAccessToken(accessToken);
+        log.info("cookie {}",cookie);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                .build();
     }
 }

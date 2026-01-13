@@ -19,6 +19,8 @@ spring:
       password: 1234
 logging:
   level:
+    root: info
+    com.example.demo: debug
     org.hibernate.SQL: debug
     org.hibernate.orm.jdbc.bind: trace
 management:
@@ -29,3 +31,5 @@ management:
   endpoint:
     prometheus:
       enabled: true
+jwt:
+  secret: "0123456789abcdef0123456789abcdef"
