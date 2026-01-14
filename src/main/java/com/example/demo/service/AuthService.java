@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.auth.TokenPair;
 import com.example.demo.global.error.AuthErrorCode;
 import com.example.demo.global.error.BusinessException;
 import com.example.demo.security.jwt.JwtProvider;
@@ -21,21 +22,32 @@ public class AuthService {
     private final UserBaseRepository userBaseRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
+    private final RefreshTokenService refreshTokenService;
 
-    public String login(LoginRequest request) {
+    public TokenPair login(LoginRequest request) {
 
         UserEntity user = userBaseRepository.findByUsrId(request.getUsrId())
                 .orElseThrow(() -> new BusinessException(AuthErrorCode.USER_NOT_FOUND));
 
-        // ⚠️ 실제 서비스에서는 BCrypt 사용
         if (!passwordEncoder.matches(request.getPassword(), user.getUsrPwd())) {
             throw new BusinessException(AuthErrorCode.USER_NOT_FOUND);
         }
 
-        return jwtProvider.createAccessToken(
+        // 1️⃣ Access Token
+        String accessToken = jwtProvider.createAccessToken(
                 String.valueOf(user.getUsrNo()),
                 user.getRole()
         );
+
+        // 2️⃣ Refresh Token
+        String refreshToken = jwtProvider.createRefreshToken(
+                String.valueOf(user.getUsrNo())
+        );
+
+        // 3️⃣ Redis 저장
+        refreshTokenService.save(refreshToken, user.getUsrNo());
+
+        return new TokenPair(accessToken, refreshToken);
     }
 
     public UserSession signIn(SignInRequest request) {

@@ -14,11 +14,41 @@ import java.util.List;
 
 @Component
 public class JwtProvider {
+    // ⏰ 만료 시간
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000L * 60 * 15;        // 15분
+    private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000L * 60 * 60 * 24 * 7; // 7일
 
     private final Key key;
 
     public JwtProvider(@Value("${jwt.secret}") String secret) {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
+    }
+
+    /**
+     * ✅ Access Token 생성
+     */
+    public String createAccessToken(String userId, String role) {
+        return Jwts.builder()
+                .setSubject(userId)
+                .claim("role", role)
+                .claim("type", "ACCESS")
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRE_TIME))
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    /**
+     * ✅ Refresh Token 생성 (이게 지금 질문)
+     */
+    public String createRefreshToken(String userId) {
+        return Jwts.builder()
+                .setSubject(userId)
+                .claim("type", "REFRESH")   // 🔥 용도 구분
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRE_TIME))
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
     }
 
     /**
@@ -69,17 +99,6 @@ public class JwtProvider {
                 null,
                 List.of(new SimpleGrantedAuthority("ROLE_" + role))
         );
-    }
-
-
-    public String createAccessToken(String username, String role) {
-        return Jwts.builder()
-                .setSubject(username)
-                .claim("role", role)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 15 * 60 * 1000))
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
     }
 }
 
