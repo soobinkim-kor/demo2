@@ -8,25 +8,24 @@ import com.example.demo.request.user.LoginRequest;
 import com.example.demo.request.user.SignInRequest;
 import com.example.demo.dto.user.UserSession;
 import com.example.demo.entity.UserEntity;
-import com.example.demo.repository.UserBaseRepository;
+import com.example.demo.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Service
 @AllArgsConstructor
 public class AuthService {
 
-    private final UserBaseRepository userBaseRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
     private final RefreshTokenService refreshTokenService;
 
     public TokenPair login(LoginRequest request) {
 
-        UserEntity user = userBaseRepository.findByUsrId(request.getUsrId())
+        UserEntity user = userRepository.findByUsrId(request.getUsrId())
                 .orElseThrow(() -> new BusinessException(AuthErrorCode.USER_NOT_FOUND));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getUsrPwd())) {
@@ -53,7 +52,7 @@ public class AuthService {
     public UserSession signIn(SignInRequest request) {
 
         // 1️⃣ 사용자 조회
-        UserEntity user = userBaseRepository.findByUsrId(request.getUsrId())
+        UserEntity user = userRepository.findByUsrId(request.getUsrId())
                 .orElseThrow(() -> new IllegalArgumentException("아이디 또는 비밀번호 오류"));
 
         // 2️⃣ BCrypt 검증 (핵심)

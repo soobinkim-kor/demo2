@@ -2,7 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.request.user.SignUpRequest;
 import com.example.demo.entity.UserEntity;
-import com.example.demo.repository.UserBaseRepository;
+import com.example.demo.repository.UserRepository;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,12 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserSignUpService {
 
-    private final UserBaseRepository userBaseRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserSignUpService(UserBaseRepository userBaseRepository,
+    public UserSignUpService(UserRepository userRepository,
                              PasswordEncoder passwordEncoder) {
-        this.userBaseRepository = userBaseRepository;
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -24,7 +24,7 @@ public class UserSignUpService {
     public UserEntity signUp(SignUpRequest request) {
 
         // 1️⃣ 아이디 중복 체크
-        if (userBaseRepository.existsByUsrId(request.getUsrId())) {
+        if (userRepository.existsByUsrId(request.getUsrId())) {
             throw new IllegalArgumentException("이미 존재하는 아이디");
         }
 
@@ -42,6 +42,6 @@ public class UserSignUpService {
                     .build();
 
         // 4️⃣ 저장
-        return userBaseRepository.save(user);
+        return userRepository.save(user);
     }
 }
