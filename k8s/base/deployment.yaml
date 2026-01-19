@@ -1,0 +1,6 @@
+spec:
+  replicas: 2
+  template:
+    spec:
+      containers:
+        - image: soobinkim/demo-api:latest
