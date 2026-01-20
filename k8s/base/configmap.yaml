@@ -1,2 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-config
+  namespace: demo
 data:
-  SPRING_PROFILES_ACTIVE: dev
+  SPRING_PROFILES_ACTIVE: docker

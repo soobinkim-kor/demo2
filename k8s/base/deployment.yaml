@@ -1,6 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo
+  namespace: demo
 spec:
-  replicas: 2
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo
   template:
     spec:
       containers:
-        - image: soobinkim/demo-api:latest
+        - name: demo
+          image: demo
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: docker
