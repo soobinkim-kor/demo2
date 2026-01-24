@@ -9,11 +9,14 @@ spec:
     matchLabels:
       app: demo
   template:
+    metadata:
+      labels:
+        app: demo
     spec:
       containers:
         - name: demo
-          image: demo
-          imagePullPolicy: IfNotPresent
+          image: demo:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:

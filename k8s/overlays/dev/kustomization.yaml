@@ -4,13 +4,7 @@ kind: Kustomization
 namespace: demo
 
 resources:
-  - ../../base/namespace.yaml
-  - ../../base/deployment.yaml
-  - ../../base/service.yaml
-  - ../../base/configmap.yaml
-  - ../../base/secret.yaml
-  - ../../base/mysql-deployment.yaml
-  - ../../mysql-service.yaml
+  - ../../base
 
-patchesStrategicMerge:
-  - configmap-patch.yaml
+patches:
+  - path: configmap-patch.yaml
