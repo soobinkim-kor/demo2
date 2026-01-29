@@ -19,7 +19,7 @@ public class SignUpController {
         this.userSignUpService = userSignUpService;
     }
 
-    @PostMapping("/signup")
+    @PostMapping("api/auth/signup")
     public ResponseEntity<UserEntity> signUp(@RequestBody SignUpRequest request) {
 
         UserEntity userEntity = userSignUpService.signUp(request);
