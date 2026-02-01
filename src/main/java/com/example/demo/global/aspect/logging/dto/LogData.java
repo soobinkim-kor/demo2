@@ -1,17 +1,42 @@
 package com.example.demo.global.aspect.logging.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
-@RequiredArgsConstructor
 @Getter
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class LogData {
 
-    private String method;
-    private String args;
-    private boolean success;
+    /** ===== Trace ===== */
+    private String traceId;
+
+    /** ===== Type ===== */
+    private String logType;   // INFO, ERROR, ACCESS, SLOW
+
+    /** ===== Method Info ===== */
+    private String className;
+    private String methodName;
+
+    /** ===== HTTP ===== */
+    private String httpMethod;
+    private String requestUri;
+
+    /** ===== User ===== */
+    private String userId;
+    private String clientIp;
+
+    /** ===== Performance ===== */
+    private Long executionTime;
+
+    /** ===== Payload ===== */
+    private String requestParam;
+    private String responseBody;
+
+    /** ===== Error ===== */
     private String errorMessage;
-    private long duration;
+    private String stackTrace;
 }

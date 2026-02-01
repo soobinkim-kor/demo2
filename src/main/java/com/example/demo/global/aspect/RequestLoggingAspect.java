@@ -2,58 +2,52 @@ package com.example.demo.global.aspect;
 
 import com.example.demo.global.aspect.logging.dto.LogData;
 import com.example.demo.global.aspect.logging.event.LogEvent;
-import lombok.extern.slf4j.Slf4j;
+import com.example.demo.global.aspect.logging.factory.LogFactory;
+
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
-
-import java.util.Arrays;
-
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Aspect
 @Component
+@RequiredArgsConstructor
 public class RequestLoggingAspect {
 
     private final ApplicationEventPublisher publisher;
-
-    public RequestLoggingAspect(ApplicationEventPublisher publisher) {
-        this.publisher = publisher;
-    }
+    private final LogFactory logFactory;
 
     @Around("execution(* com.example.demo..controller..*(..))")
     public Object log(ProceedingJoinPoint joinPoint) throws Throwable {
 
         long start = System.currentTimeMillis();
 
+        HttpServletRequest request =
+                ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+                        .getRequest();
+
         try {
             Object result = joinPoint.proceed();
 
-            LogData data = new LogData(
-                    joinPoint.getSignature().toShortString(),
-                    Arrays.toString(joinPoint.getArgs()),
-                    true,
-                    null,
-                    System.currentTimeMillis() - start
-            );
+            LogData data =
+                    logFactory.createAccessLog(joinPoint, request, start);
 
             publisher.publishEvent(new LogEvent(data));
-
             return result;
 
-        } catch (Exception e)  {
+        } catch (Exception e) {
 
-            LogData data = new LogData(
-                    joinPoint.getSignature().toShortString(),
-                    Arrays.toString(joinPoint.getArgs()),
-                    false,
-                    e.getMessage(),
-                    System.currentTimeMillis() - start
-            );
+            LogData data =
+                    logFactory.createErrorLog(joinPoint, request, start, e);
 
             publisher.publishEvent(new LogEvent(data));
-
             throw e;
         }
     }
