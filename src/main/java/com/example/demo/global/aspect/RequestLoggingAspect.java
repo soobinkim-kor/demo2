@@ -42,7 +42,7 @@ public class RequestLoggingAspect {
 
             return result;
 
-        } catch (Exception e) {
+        } catch (Exception e)  {
 
             LogData data = new LogData(
                     joinPoint.getSignature().toShortString(),
