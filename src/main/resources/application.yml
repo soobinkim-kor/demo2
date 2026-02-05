@@ -24,14 +24,17 @@ spring:
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
-      group-id: chat-group
+      group-id: log-group
       auto-offset-reset: earliest
+      enable-auto-commit: true
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
+    properties:
+      spring.json.trusted.packages: "*"
 logging:
   level:
     root: info
@@ -48,13 +51,3 @@ management:
       enabled: true
 jwt:
   secret: "0123456789abcdef0123456789abcdef"
-
-# ===== 로깅 시스템용 커스텀 설정 추가 =====
-app:
-  kafka:
-    topics:
-      chat: chat-messages      # 기존 채팅용
-      log: app-logs           # 새로 추가: 로깅용
-      order-events: order-events  # 주문 이벤트용 (나중에 필요하면)
-    consumer:
-      log-group: log-consumer-group  # 로깅 전용 컨슈머 그룹
