@@ -4,6 +4,7 @@ import com.example.demo.global.aspect.logging.dto.LogData;
 import com.example.demo.global.aspect.logging.event.LogEvent;
 import com.example.demo.global.aspect.logging.factory.LogFactory;
 
+import com.example.demo.service.KafkaProducerService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
@@ -23,7 +24,7 @@ public class RequestLoggingAspect {
 
     private final ApplicationEventPublisher publisher;
     private final LogFactory logFactory;
-
+    private final KafkaProducerService producer;
     @Around("execution(* com.example.demo..controller..*(..))")
     public Object log(ProceedingJoinPoint joinPoint) throws Throwable {
 
@@ -39,7 +40,7 @@ public class RequestLoggingAspect {
             LogData data =
                     logFactory.createAccessLog(joinPoint, request, start);
 
-            publisher.publishEvent(new LogEvent(data));
+            producer.sendMessage(new LogEvent(data));
             return result;
 
         } catch (Exception e) {

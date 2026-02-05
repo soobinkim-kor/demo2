@@ -1,6 +1,6 @@
 package com.example.demo.kafka.producer;
 
-import com.example.demo.kafka.model.LogEvent;
+import com.example.demo.global.aspect.logging.event.LogEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
