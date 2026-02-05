@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.kafka.model.LogEvent;
+import com.example.demo.global.aspect.logging.dto.LogData;
+import com.example.demo.global.aspect.logging.event.LogEvent;
 import com.example.demo.global.aspect.logging.repository.LoggingEventRepository;
 import com.example.demo.global.aspect.logging.entity.LoggingEvent;
 import lombok.RequiredArgsConstructor;
@@ -12,14 +13,18 @@ public class LoggingService {
 
     private final LoggingEventRepository loggingRepository;
 
-    public void save(LogEvent event) {
+    public void save(LogEvent logEvent) {
+
+        LogData logData = logEvent.getLogData();
 
         LoggingEvent entity = LoggingEvent.builder()
-                .traceId(event.getTraceId())
-                .className(event.getClassName())
-                .methodName(event.getMethodName())
-                .executionTime(event.getExecutionTime())
-                .errorMessage(event.getErrorMessage())
+                .traceId(logData.getTraceId())
+                .className(logData.getClassName())
+                .logType(logData.getLogType())
+                .methodName(logData.getMethodName())
+                .createdAt(logData.getCreatedAt())
+                .executionTime(logData.getExecutionTime())
+                .errorMessage(logData.getErrorMessage())
                 .build();
 
         loggingRepository.save(entity);

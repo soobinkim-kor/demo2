@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -47,6 +48,7 @@ public class LogFactory {
                 .httpMethod(request.getMethod())
                 .requestUri(request.getRequestURI())
                 .clientIp(request.getRemoteAddr())
+                .createdAt(LocalDateTime.now())
                 .executionTime(System.currentTimeMillis() - startTime)
                 .requestParam(Arrays.toString(joinPoint.getArgs()));
     }

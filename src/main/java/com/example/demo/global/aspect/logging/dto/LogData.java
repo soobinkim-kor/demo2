@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 @NoArgsConstructor
@@ -25,6 +27,7 @@ public class LogData {
     private String httpMethod;
     private String requestUri;
 
+    private LocalDateTime createdAt;
     /** ===== User ===== */
     private String userId;
     private String clientIp;

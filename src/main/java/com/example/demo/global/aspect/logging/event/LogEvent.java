@@ -1,14 +1,13 @@
 package com.example.demo.global.aspect.logging.event;
 
 import com.example.demo.global.aspect.logging.dto.LogData;
-import lombok.Getter;
+import lombok.*;
 
 @Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class LogEvent {
 
-    private final LogData logData;
-
-    public LogEvent(LogData logData) {
-        this.logData = logData;
-    }
+    private LogData logData;
 }
