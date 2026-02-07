@@ -3,6 +3,8 @@ package com.example.demo.kafka.consumer;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch.core.IndexRequest;
 
+import co.elastic.clients.elasticsearch.core.IndexResponse;
+import com.example.demo.global.aspect.logging.event.LogEvent;
 import com.example.demo.kafka.model.LogMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -27,20 +29,20 @@ public class LogEsConsumer {
             topics = "app-log-topic",
             groupId = "log-es-consumer"
     )
-    public void consume(LogMessage logMessage) {
+    public void consume(LogEvent event) {
 
         try {
 
             String indexName =
                     INDEX_PREFIX + LocalDate.now();
 
-            IndexRequest<LogMessage> request =
+            IndexRequest<LogEvent> request =
                     IndexRequest.of(i -> i
                             .index(indexName)
-                            .document(logMessage)
+                            .document(event)
                     );
 
-            elasticsearchClient.index(request);
+            IndexResponse response = elasticsearchClient.index(request);
 
         } catch (Exception e) {
             log.error("Elasticsearch 저장 실패", e);
