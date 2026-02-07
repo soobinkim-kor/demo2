@@ -20,7 +20,6 @@ import java.time.LocalDate;
 public class LogEsConsumer {
 
     private final ElasticsearchClient elasticsearchClient;
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     private static final String INDEX_PREFIX = "app-log-";
 
@@ -28,11 +27,9 @@ public class LogEsConsumer {
             topics = "app-log-topic",
             groupId = "log-es-consumer"
     )
-    public void consume(String message) {
+    public void consume(LogMessage logMessage) {
 
         try {
-            LogMessage logMessage =
-                    objectMapper.readValue(message, LogMessage.class);
 
             String indexName =
                     INDEX_PREFIX + LocalDate.now();
