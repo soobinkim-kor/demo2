@@ -24,7 +24,8 @@ public class RequestLoggingAspect {
 
     private final ApplicationEventPublisher publisher;
     private final LogFactory logFactory;
-    private final KafkaProducerService producer;
+    private final KafkaProducerService kafkaProducerService;
+
     @Around("execution(* com.example.demo..controller..*(..))")
     public Object log(ProceedingJoinPoint joinPoint) throws Throwable {
 
@@ -40,7 +41,8 @@ public class RequestLoggingAspect {
             LogData data =
                     logFactory.createAccessLog(joinPoint, request, start);
 
-            producer.sendMessage(new LogEvent(data));
+            kafkaProducerService.sendMessage(new LogEvent(data));
+
             return result;
 
         } catch (Exception e) {
