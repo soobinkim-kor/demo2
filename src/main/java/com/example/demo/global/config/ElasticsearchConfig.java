@@ -15,17 +15,14 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ElasticsearchConfig {
 
-    @Value("${elasticsearch.host:localhost}")
-    private String host;
-
-    @Value("${elasticsearch.port:9200}")
-    private int port;
+    @Value("${spring.elasticsearch.uris}")
+    private String uri;
 
     @Bean
     public ElasticsearchClient elasticsearchClient() {
         // RestClient 생성
         RestClient restClient = RestClient.builder(
-                new HttpHost(host, port, "http")
+                HttpHost.create(uri)
         ).build();
 
         // ObjectMapper에 JavaTimeModule 등록

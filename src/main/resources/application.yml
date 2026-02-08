@@ -23,24 +23,22 @@ spring:
       port: 6379
   kafka:
     bootstrap-servers: localhost:9092
-    consumer:
-      group-id: log-group
-      auto-offset-reset: earliest
-      enable-auto-commit: true
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-
     properties:
       spring.json.trusted.packages: "*"
+    listener:
+      log-container-config: false
+  elasticsearch:
+    uris: http://localhost:9200
+    username: elastic
+    password: changeme
 logging:
   level:
     root: info
     com.example.demo: debug
     org.hibernate.SQL: debug
     org.hibernate.orm.jdbc.bind: trace
+    org.apache.kafka: warn
+    org.springframework.kafka: warn
 management:
   endpoints:
     web:
