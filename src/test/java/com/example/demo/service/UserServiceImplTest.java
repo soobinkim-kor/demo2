@@ -2,7 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.user.UserDTO;
 import com.example.demo.entity.UserEntity;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.user.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

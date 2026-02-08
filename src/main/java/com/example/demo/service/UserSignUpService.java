@@ -2,7 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.request.user.SignUpRequest;
 import com.example.demo.entity.UserEntity;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.user.UserRepository;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

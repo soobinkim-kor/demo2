@@ -8,7 +8,7 @@ import com.example.demo.request.user.LoginRequest;
 import com.example.demo.request.user.SignInRequest;
 import com.example.demo.dto.user.UserSession;
 import com.example.demo.entity.UserEntity;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.user.UserRepository;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

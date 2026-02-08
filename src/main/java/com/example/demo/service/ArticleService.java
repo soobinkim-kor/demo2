@@ -3,15 +3,11 @@ package com.example.demo.service;
 import com.example.demo.entity.ArticleEntity;
 import com.example.demo.global.error.ArticleErrorCode;
 import com.example.demo.global.error.BusinessException;
-import com.example.demo.global.error.CommonErrorCode;
-import com.example.demo.repository.ArticleBaseRepository;
-import com.example.demo.request.article.ArticleDeleteRequest;
+import com.example.demo.repository.article.ArticleBaseRepository;
 import com.example.demo.request.article.ArticleWriteRequest;
-import com.example.demo.response.article.ArticleListResponse;
 import com.example.demo.response.article.ArticleWriteResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
