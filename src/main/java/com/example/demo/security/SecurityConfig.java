@@ -46,7 +46,8 @@ public class SecurityConfig {
                                 "/api/auth/**",
                                 "/api/redis/**",
                                 "/error",
-                                "/actuator/**"
+                                "/actuator/**",
+                                "/test/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

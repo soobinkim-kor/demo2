@@ -43,6 +43,8 @@ services:
       - "9090:9090"
     volumes:
       - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+    environment:
+      SPRING_APP_HOST: host.docker.internal
   loki:
     image: grafana/loki
     container_name: loki
