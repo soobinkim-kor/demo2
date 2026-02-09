@@ -45,7 +45,8 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/api/auth/**",
                                 "/api/redis/**",
-                                "/error"
+                                "/error",
+                                "/actuator/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
