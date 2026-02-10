@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.global.aspect.logging.dto.LogData;
 import com.example.demo.global.aspect.logging.event.LogEvent;
 import com.example.demo.kafka.producer.LogEsProducer;
 import org.junit.jupiter.api.Test;
@@ -22,8 +23,10 @@ class LogEsProducerTest {
 
     @Test
     void sendTest(){
-        LogEvent logEvent = LogEvent.builder().build();
-        logProducer.send(logEvent);
+        LogData logData = new LogData();
+
+        LogEvent logEvent = LogEvent.builder().logData(logData).build();
+        logProducer.send("log-topic",logEvent);
 
         verify(kafkaTemplate).send("log-topic", "hello");
     }
