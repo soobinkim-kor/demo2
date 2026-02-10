@@ -67,7 +67,7 @@ avro {
 }
 
 tasks.named('test') {
-//    useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 sourceSets {
