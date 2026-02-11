@@ -10,13 +10,15 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.kafka.core.KafkaTemplate;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class LogEsProducerTest {
 
     @Mock
-    KafkaTemplate<String, String> kafkaTemplate;
+    KafkaTemplate<String, LogEvent> kafkaTemplate;
 
     @InjectMocks
     LogEsProducer logProducer;
@@ -28,7 +30,8 @@ class LogEsProducerTest {
         LogEvent logEvent = LogEvent.builder().logData(logData).build();
         logProducer.send("log-topic",logEvent);
 
-        verify(kafkaTemplate).send("log-topic", "hello");
+        verify(kafkaTemplate)
+                .send(eq("app-log-topic"), any(LogEvent.class));
     }
 }
 
