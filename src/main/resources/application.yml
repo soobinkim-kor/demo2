@@ -55,3 +55,4 @@ jwt:
 grpc:
   server:
     reflection-service-enabled: true
+    port: 9191

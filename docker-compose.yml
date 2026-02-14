@@ -1,21 +1,21 @@
 version: "3.8"
 
 services:
-  app:
-    build: .
-    container_name: demo
-    ports:
-      - "8080:8080"
-      - "5005:5005"
-    environment:
-      SPRING_WEB_LOCALE: ko_KR
-      SPRING_PROFILES_ACTIVE: docker
-      JAVA_TOOL_OPTIONS: >
-        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
-    depends_on:
-      - mysql
-      - redis
-      - kafka
+#  app:
+#    build: .
+#    container_name: demo
+#    ports:
+#      - "8080:8080"
+#      - "5005:5005"
+#    environment:
+#      SPRING_WEB_LOCALE: ko_KR
+#      SPRING_PROFILES_ACTIVE: docker
+#      JAVA_TOOL_OPTIONS: >
+#        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+#    depends_on:
+#      - mysql
+#      - redis
+#      - kafka
   mysql:
     image: mysql:8.0
     volumes:
@@ -53,6 +53,8 @@ services:
     volumes:
       - ./loki-config.yml:/etc/loki/config.yml
     command: -config.file=/etc/loki/config.yml
+#    limits_config:
+#      allow_structured_metadata
   promtail:
     image: grafana/promtail:2.9.3
     container_name: promtail
