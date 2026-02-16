@@ -1,6 +1,6 @@
 spring:
   application:
-    name: demo
+    name: demo-user
   web:
     resources:
       static-locations: classpath:/static/, classpath:/static/bootstrap/
