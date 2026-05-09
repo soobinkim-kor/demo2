@@ -42,9 +42,9 @@ public class UserController {
     public ResponseEntity<UserEntity> saveUser(@RequestBody UserDTO userParam){
         SignUpRequest signUpRequest = new SignUpRequest();
         signUpRequest.setUsrId(UUID.randomUUID().toString());
-        signUpRequest.setUsrNm("김수빈");
+        signUpRequest.setUsrNm("테스트유저");
         signUpRequest.setPassword("1234");
-        signUpRequest.setUsrEmail("shb03207@naver.com");
+        signUpRequest.setUsrEmail("test@example.com");
         return new ResponseEntity<>(userSignUpService.signUp(signUpRequest), HttpStatus.OK);
     }
 
@@ -52,9 +52,9 @@ public class UserController {
     public ResponseEntity<UserEntity> saveUserTest(){
         SignUpRequest signUpRequest = new SignUpRequest();
         signUpRequest.setUsrId(UUID.randomUUID().toString());
-        signUpRequest.setUsrNm("김수빈");
+        signUpRequest.setUsrNm("테스트유저");
         signUpRequest.setPassword("1234");
-        signUpRequest.setUsrEmail("shb03207@naver.com");
+        signUpRequest.setUsrEmail("test@example.com");
         return new ResponseEntity<>(userSignUpService.signUp(signUpRequest), HttpStatus.OK);
     }
 

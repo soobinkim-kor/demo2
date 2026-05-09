@@ -67,7 +67,7 @@ public class MonoOrderService {
      */
     @Transactional
     public void initTestInventory() {
-        monoInventoryRepository.deleteAll();
+        monoInventoryRepository.deleteAllInBatch();
         for (long i = 1; i <= 10; i++) {
             monoInventoryRepository.save(MonoInventoryEntity.builder()
                     .productNo(i)

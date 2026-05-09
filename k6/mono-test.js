@@ -22,13 +22,8 @@ export const options = {
 
 const BASE_URL = 'http://localhost:8080';
 
-// 상품 1~10 중 랜덤 선택
-function randomProductNo() {
-    return Math.floor(Math.random() * 10) + 1;
-}
-
 export default function () {
-    const productNo = randomProductNo();
+    const productNo = 1;  // 락 경합 테스트: 모든 요청이 같은 상품에 집중
 
     const payload = JSON.stringify({
         usrNo: Math.floor(Math.random() * 1000) + 1,

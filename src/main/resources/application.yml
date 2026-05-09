@@ -53,7 +53,7 @@ management:
     tags:
       application: demo
 jwt:
-  secret: "0123456789abcdef0123456789abcdef"
+  secret: ${JWT_SECRET:0123456789abcdef0123456789abcdef}
 grpc:
   server:
     reflection-service-enabled: true
