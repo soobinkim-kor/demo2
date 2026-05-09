@@ -1,21 +1,22 @@
 syntax = "proto3";
 
-package com.soobin.user.grpc;
+package com.example.user.grpc;
 
 option java_multiple_files = true;
-option java_package = "com.soobin.user.grpc";
-option java_outer_classname = "UserProto";
+option java_package = "com.example.user.grpc";
+option java_outer_classname = "UserQueryProto";
 
-service UserService {
-  rpc GetUser (UserRequest) returns (UserResponse);
+service UserQueryService {
+  rpc GetUser (GetUserRequest) returns (GetUserResponse);
 }
 
-message UserRequest {
-  string userId = 1;
+message GetUserRequest {
+  int64 usrNo = 1;
 }
 
-message UserResponse {
-  string userId = 1;
-  string name = 2;
-  string email = 3;
+message GetUserResponse {
+  int64 usrNo = 1;
+  string usrId = 2;
+  string usrNm = 3;
+  string usrEmail = 4;
 }
