@@ -46,7 +46,13 @@ public class AuthService {
         // 3️⃣ Redis 저장
         refreshTokenService.save(refreshToken, user.getUsrNo());
 
-        return new TokenPair(accessToken, refreshToken);
+        return new TokenPair(
+                accessToken,
+                refreshToken,
+                user.getUsrNo(),
+                user.getUsrId(),
+                user.getUsrNm()
+        );
     }
 
     public UserSession signIn(SignInRequest request) {

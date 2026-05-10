@@ -37,7 +37,10 @@ public class AuthController {
             return ResponseEntity.ok(
                     new TokenResponse(
                             tokenPair.accessToken(),
-                            tokenPair.refreshToken()
+                            tokenPair.refreshToken(),
+                            tokenPair.usrNo(),
+                            tokenPair.usrId(),
+                            tokenPair.usrNm()
                     )
             );
         }
