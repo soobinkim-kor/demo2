@@ -27,8 +27,11 @@ spring:
     bootstrap-servers: localhost:9092
     properties:
       spring.json.trusted.packages: "*"
+    template:
+      observation-enabled: true
     listener:
       log-container-config: false
+      observation-enabled: true
   elasticsearch:
     uris: http://localhost:9200
     username: elastic
@@ -45,13 +48,19 @@ management:
   endpoints:
     web:
       exposure:
-        include: prometheus, health, info
+        include: prometheus, health, info, metrics
   endpoint:
     prometheus:
       enabled: true
   metrics:
     tags:
       application: demo
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
 jwt:
   secret: ${JWT_SECRET:0123456789abcdef0123456789abcdef}
 grpc:

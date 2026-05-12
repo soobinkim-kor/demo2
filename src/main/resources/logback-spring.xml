@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <springProperty scope="context" name="appName" source="spring.application.name" defaultValue="app"/>
+
+    <!--
+        패턴 가이드:
+          %X{traceId} / %X{spanId}    : Micrometer Tracing이 자동으로 MDC에 박음
+          %X{orderNo}                 : 도메인 correlation ID. 코드에서 MDC.put("orderNo", ...) 한 동안만 출력
+          [${appName},traceId,spanId] : Loki/Grafana에서 한 trace의 흐름을 묶어 보기 위함
+    -->
+    <property name="LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p [${appName},%X{traceId:-},%X{spanId:-},%X{orderNo:-}] [%thread] %-40.40logger{39} : %msg%n"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- docker 프로필일 때만 파일 출력 — Promtail이 /logs/*.log 읽음 -->
+    <springProfile name="docker">
+        <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>/logs/${appName}.log</file>
+            <encoder>
+                <pattern>${LOG_PATTERN}</pattern>
+            </encoder>
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <fileNamePattern>/logs/${appName}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+                <maxFileSize>50MB</maxFileSize>
+                <maxHistory>7</maxHistory>
+            </rollingPolicy>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="FILE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="!docker">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+</configuration>

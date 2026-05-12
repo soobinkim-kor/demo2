@@ -37,6 +37,10 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     properties:
       spring.json.trusted.packages: "*"
+    template:
+      observation-enabled: true
+    listener:
+      observation-enabled: true
 logging:
   level:
     root: info
@@ -47,17 +51,16 @@ management:
   endpoints:
     web:
       exposure:
-        include: prometheus
+        include: prometheus, health, info, metrics
   endpoint:
     prometheus:
       enabled: true
-  elasticsearch:
-    uris: http://elasticsearch:9200
-    username: elastic
-    password: changeme
-  jpa:
-    hibernate:
-      ddl-auto: update
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://tempo:9411/api/v2/spans
 jwt:
   secret: ${JWT_SECRET:0123456789abcdef0123456789abcdef}
 grpc:

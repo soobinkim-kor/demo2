@@ -97,6 +97,29 @@ services:
     container_name: grafana
     ports:
       - "3000:3000"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+      GF_FEATURE_TOGGLES_ENABLE: "traceqlEditor"
+    depends_on:
+      - prometheus
+      - loki
+      - tempo
+
+  tempo:
+    image: grafana/tempo:2.4.1
+    container_name: tempo
+    command: ["-config.file=/etc/tempo.yml"]
+    volumes:
+      - ./tempo-config.yml:/etc/tempo.yml
+      - tempo-data:/var/tempo
+    ports:
+      - "3200:3200"   # Tempo HTTP (Grafana datasource)
+      - "9411:9411"   # Zipkin ingest (서비스가 trace 보내는 곳)
+      - "4317:4317"   # OTLP gRPC
+      - "4318:4318"   # OTLP HTTP
 
   prometheus:
     image: prom/prometheus
@@ -171,3 +194,4 @@ services:
 volumes:
   mysql-data:
   mongo-data:
+  tempo-data:

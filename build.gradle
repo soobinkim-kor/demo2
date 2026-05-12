@@ -51,6 +51,10 @@ dependencies {
     implementation 'io.micrometer:micrometer-registry-prometheus'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
+    // Distributed tracing — Brave + Zipkin/Tempo exporter
+    implementation 'io.micrometer:micrometer-tracing-bridge-brave'
+    implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
+
     implementation 'org.springframework.kafka:spring-kafka'
     implementation 'io.confluent:kafka-avro-serializer:7.5.0'
     implementation 'co.elastic.clients:elasticsearch-java:8.12.2'
